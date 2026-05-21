@@ -17,7 +17,7 @@ app.use(express.urlencoded({ limit: "15mb", extended: true }));
 let aiClient: GoogleGenAI | null = null;
 function getGeminiClient(): GoogleGenAI {
   if (!aiClient) {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.VITE_GEMINI_API_KEY;
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY is not configured in the environment variables.");
     }
@@ -92,7 +92,7 @@ app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     timestamp: new Date().toISOString(),
-    apiKeyConfigured: !!process.env.GEMINI_API_KEY,
+    apiKeyConfigured: !!process.env.VITE_GEMINI_API_KEY,
   });
 });
 
