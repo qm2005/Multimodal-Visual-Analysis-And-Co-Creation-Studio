@@ -18,6 +18,12 @@ export async function handleApiResponse(response: Response): Promise<any> {
   }
 
   if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error(
+        `接口不存在或后端服务未运行 (HTTP 404)\n\n🔔【原因定位】：检测到您当前访问的站点（如 Vercel/GitHub Pages 静态托管）未运行 Node.js 动态后端服务项目。项目采用 Express + Vite 架构，多模态大模型及画面像素聚类、图代理分析相关接口（/api/*）需要动态服务器支持。\n\n💡【解决方案】：\n1. 请使用由 Google AI Studio 提供并部署于 Cloud Run 容器的 Development App/Shared App 临时预览链接访问即可体验完整的多模态功能！\n2. 如需在您托管的静态网站上使用，请使用直接“点击或拖拽上传”本地图片，这样无需经过代理中转即可进行本地高级算法操作。`
+      );
+    }
+
     // If response content type is JSON, try parsing error message
     if (contentType.toLowerCase().includes("application/json")) {
       try {

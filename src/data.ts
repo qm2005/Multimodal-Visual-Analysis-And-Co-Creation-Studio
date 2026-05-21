@@ -10,7 +10,7 @@ export const PRESET_IMAGES: PresetImage[] = [
   {
     id: "neon_cyber",
     name: "霓虹幻域 (Cyber Tokyo)",
-    url: "https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?auto=format&fit=crop&w=800&q=80",
+    url: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80",
     description: "雨夜中迷幻交错的多彩东京霓虹街区",
   },
   {

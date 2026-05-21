@@ -17,7 +17,7 @@ app.use(express.urlencoded({ limit: "15mb", extended: true }));
 let aiClient: GoogleGenAI | null = null;
 function getGeminiClient(): GoogleGenAI {
   if (!aiClient) {
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY is not configured in the environment variables.");
     }
@@ -92,7 +92,7 @@ app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     timestamp: new Date().toISOString(),
-    apiKeyConfigured: !!import.meta.env.VITE_GEMINI_API_KEY,
+    apiKeyConfigured: !!process.env.GEMINI_API_KEY,
   });
 });
 
@@ -472,6 +472,13 @@ async function initializeServer() {
   });
 }
 
-initializeServer().catch((err) => {
-  console.error("Failed to initialize backend server:", err);
-});
+// Bypasses local listeners and Vite compiler mounting if deployed inside the Vercel Serverless environment
+if (process.env.VERCEL) {
+  console.log("Running within Vercel Serverless Function context, bypassing local listener.");
+} else {
+  initializeServer().catch((err) => {
+    console.error("Failed to initialize backend server:", err);
+  });
+}
+
+export default app;

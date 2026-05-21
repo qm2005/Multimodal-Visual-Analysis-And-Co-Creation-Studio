@@ -4,6 +4,7 @@ import { PRESET_IMAGES } from "../data";
 import { PresetImage } from "../types";
 import { LazyImage } from "./LazyImage";
 import { handleApiResponse } from "../utils/api";
+import { downscaleImageFile, downscaleImageDataUrl } from "../utils/imageCompressor";
 
 interface ImageUploaderProps {
   onImageSelected: (base64: string, mimeType: string, imageUrl: string) => void;
@@ -17,33 +18,27 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   const [isDragActive, setIsDragActive] = useState(false);
   const [loadingPreset, setLoadingPreset] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isCompressing, setIsCompressing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const processFile = (file: File) => {
+  const processFile = async (file: File) => {
     if (!file.type.startsWith("image/")) {
       setErrorMsg("所选文件不是有效的图像格式哦。请上传图片（JPEG/PNG/WEBP）");
       return;
     }
 
-    if (file.size > 12 * 1024 * 1024) {
-      setErrorMsg("图片文件太大了（不能超过12MB）。请选择稍小一点的图片");
-      return;
-    }
-
     setErrorMsg(null);
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      // Extract pure base64 representation and mimeType
-      const [header, base64] = result.split(";base64,");
-      const mimeType = header.replace("data:", "");
-      
-      onImageSelected(base64, mimeType, result);
-    };
-    reader.onerror = () => {
-      setErrorMsg("文件读取失败，请换张图片试试");
-    };
-    reader.readAsDataURL(file);
+    setIsCompressing(true);
+    try {
+      // Compress/downscale file using client canvas to keep payload under 300KB
+      const result = await downscaleImageFile(file, 1200);
+      onImageSelected(result.base64, result.mimeType, result.dataUrl);
+    } catch (err: any) {
+      console.error("Client side image downscaling failed:", err);
+      setErrorMsg("图像优化压缩失败，请换张图片重试");
+    } finally {
+      setIsCompressing(false);
+    }
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -81,8 +76,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       const data = await handleApiResponse(response);
       
       if (data.success && data.imageBase64) {
-        const fullDataUrl = `data:${data.mimeType};base64,${data.imageBase64}`;
-        onImageSelected(data.imageBase64, data.mimeType, fullDataUrl);
+        const rawDataUrl = `data:${data.mimeType};base64,${data.imageBase64}`;
+        setIsCompressing(true);
+        // Optimize the proxy'd remote image block on client side as well for safety
+        const result = await downscaleImageDataUrl(rawDataUrl, 1200);
+        onImageSelected(result.base64, result.mimeType, result.dataUrl);
       } else {
         throw new Error(data.error || "获取预置图片失败");
       }
@@ -90,6 +88,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       console.error(err);
       setErrorMsg(`下载预估样图失败: ${err.message || "网络请求异常"}`);
     } finally {
+      setIsCompressing(false);
       setLoadingPreset(null);
     }
   };
@@ -119,6 +118,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           onChange={handleChange}
           className="hidden"
         />
+
+        {isCompressing && (
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex flex-col items-center justify-center space-y-2 z-30">
+            <Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
+            <p className="text-xs font-bold text-slate-700">正在优化缩放图像像素...</p>
+            <p className="text-[10px] text-slate-400">进行高精度 Canvas 压缩以适配极速多动态计算</p>
+          </div>
+        )}
 
         {selectedImageUrl ? (
           <div className="w-full h-full flex flex-col items-center justify-center space-y-3">

@@ -16,28 +16,28 @@ const translations: TranslationDictionary = {
     en: "Multimodal Visual Analysis & Co-Creation Studio"
   },
   appSubtitle: {
-    zh: "基于 Gemini 双语多模态大模型的智能图像识别、多特征提炼与图文创意营销工坊",
-    en: "Intelligent image recognition, visual feature extraction & creative copywriting powered by Gemini Multimodal LLM"
+    zh: "基于 Gemini 智能大模型的多模态图像解构与高阶双语内容创意生产平台",
+    en: "Advanced multimodal image deconstruction and high-end creative content generation powered by Gemini"
   },
   apiStatus: {
-    zh: "接口状态: 在线",
-    en: "API STATUS: ONLINE"
+    zh: "平台服务: 正常运行",
+    en: "Service Status: Active"
   },
   studentBadge: {
-    zh: "CS 计算机双专业 · 大三",
-    en: "CS Double Major · Junior Year"
+    zh: "专业级多模态工作站",
+    en: "Enterprise Multimodal Station"
   },
   studentVibe: {
-    zh: "智能多模态大模型工程项目实训",
-    en: "Project: Multimodal Agent Engineering"
+    zh: "智能图视解析工程",
+    en: "Engine: Multimodal Agent"
   },
   modelName: {
-    zh: "模型名称: gemini-3.5-flash",
-    en: "MODEL: gemini-3.5-flash"
+    zh: "深度推理模型: gemini-3.5-flash",
+    en: "Model: gemini-3.5-flash"
   },
   footerText: {
-    zh: "© 2026. 智能多模态图文创作工坊. 专为计算机科学与技术大三学生作业定制设计.",
-    en: "© 2026. Multimodal Visual Co-Creation Studio. Custom-built for computer science project presentation."
+    zh: "© 2026. 多模态图文智能分析与创作系统. 版权所有.",
+    en: "© 2026. Multimodal Visual Analysis & Co-Creation Studio. All rights reserved."
   },
 
   // Navigation Tabs

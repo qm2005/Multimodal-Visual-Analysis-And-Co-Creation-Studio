@@ -9,8 +9,7 @@ import {
   Aperture,
   Share2,
   AlertCircle,
-  Cpu,
-  GraduationCap
+  Cpu
 } from "lucide-react";
 import { WorkbenchPage } from "./components/WorkbenchPage";
 import { FeatureAnalysisPage } from "./components/FeatureAnalysisPage";
@@ -363,30 +362,16 @@ export default function App() {
             </div>
           </div>
 
-          {/* Exclusive Student Academic Badge info & Language Selector */}
+          {/* Language Selector */}
           <div className="flex items-center space-x-3 self-start md:self-auto flex-wrap gap-2">
             {/* Quick Language Toggle Button */}
             <button
               onClick={toggleLanguage}
-              className="px-3.5 py-2 rounded-xl text-xs font-bold border border-indigo-200 bg-indigo-50/40 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-300 transition-all cursor-pointer flex items-center space-x-1.5 shadow-xs"
+              className="px-3.5 py-2 rounded-xl text-xs font-bold border border-indigo-200 bg-indigo-50/40 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-300 transition-all cursor-pointer flex items-center space-x-1.5 shadow-sm"
             >
               <Cpu className="w-3.5 h-3.5 text-indigo-500 animate-pulse" />
               <span>{language === "zh" ? "English" : "中文 (CN)"}</span>
             </button>
-
-            <div className="bg-slate-50 border border-slate-100/80 rounded-xl px-3.5 py-2 flex items-center space-x-2.5">
-              <div className="bg-emerald-50 text-emerald-600 p-1.5 rounded-lg">
-                <GraduationCap className="w-4 h-4" />
-              </div>
-              <div className="text-right">
-                <div className="text-xs font-semibold text-slate-700">{t("studentBadge")}</div>
-                <div className="text-[10px] font-mono text-slate-400">{t("studentVibe")}</div>
-              </div>
-            </div>
-            <div className="bg-indigo-50/50 border border-indigo-100/50 rounded-xl px-3 py-2 text-right hidden sm:block">
-              <div className="text-[10px] font-mono font-medium text-indigo-700">{t("apiStatus")}</div>
-              <div className="text-[9px] text-slate-500 font-mono">{t("modelName")}</div>
-            </div>
           </div>
         </div>
       </header>
