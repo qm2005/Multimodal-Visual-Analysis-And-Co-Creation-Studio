@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in-up: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbar for better UI density */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.6);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(203, 213, 225, 1);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 1);
+}
+
+/* Elegant selection overlay styles */
+::selection {
+  background-color: rgba(99, 102, 241, 0.15);
+  color: rgb(79, 70, 229);
+}
+
+/* Story rendering container style overrides */
+.markdown-body {
+  font-family: inherit;
+  line-height: 1.8;
+  color: #334155;
+}
+
+.markdown-body h1, .markdown-body h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown-body h1 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.markdown-body p {
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.markdown-body blockquote {
+  border-left: 4px solid #6366f1;
+  padding-left: 1rem;
+  font-style: italic;
+  color: #475569;
+  background-color: #f8fafc;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin: 1rem 0;
+  border-radius: 0 4px 4px 0;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "多模态图文智能分析与创作系统",
+  "description": "基于双语和多模态大模型的智能图文分析与故事、海报文案、图像特征提取创意工坊系统。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
